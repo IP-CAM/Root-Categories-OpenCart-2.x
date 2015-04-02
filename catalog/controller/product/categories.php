@@ -25,7 +25,7 @@ class ControllerProductCategories extends Controller {
 
 		$data['categories'] = array();
 
-		$categories = $this->model_catalog_category->getCategories();
+		$categories = $this->model_catalog_categories->getCategories();
 
 		foreach ($categories as $category) {
 
