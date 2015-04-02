@@ -4,6 +4,7 @@ class ControllerProductCategories extends Controller {
 		$this->load->language('product/categories');
 
 		$data['heading_title'] = $this->language->get('catalog');
+		$this->document->setTitle($this->language->get('catalog'));
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -22,17 +23,17 @@ class ControllerProductCategories extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->load->model('catalog/categories');
+		$this->load->model('tool/image');
 
 		$data['categories'] = array();
 
 		$categories = $this->model_catalog_categories->getCategories();
 
 		foreach ($categories as $category) {
-
 			$data['categories'][] = array(
 				'category_id' => $category['category_id'],
 				'name'        => $category['name'],
-				'img'        => $category['image'],
+				'img'         => ($category['image'])?$img = $this->model_tool_image->resize($category['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height')):'',
 				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
 			);
 		}
